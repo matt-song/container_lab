@@ -5,7 +5,7 @@ msg=$1;
 DATE_NOW=`date +%F`
 
 cd /root/container_training
-git add *
+git add --all
 git commit -m "$msg Updated at $DATE_NOW"
 git push -u origin master
 
