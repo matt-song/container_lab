@@ -8,4 +8,8 @@ do
     scp ~/container_lab/system_settings/bashrc $host:~/.bashrc
     scp ~/.ssh/authorized_keys $host:~/.ssh/authorized_keys
     scp /etc/hosts $host:/etc/hosts
+    
+    # sync the certificate and update the trust #
+    #scp /etc/pki/ca-trust/source/anchors/harbor.matt.lab.crt $host:/etc/pki/ca-trust/source/anchors/
+    #ssh $host "update-ca-trust"
 done
