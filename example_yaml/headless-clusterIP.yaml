@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homepage-svc-headless
+spec:
+  type: ClusterIP
+  selector: 
+    app: nginx
+    release: stable
+  clusterIP: "None"
+  ports:
+  - name: http
+    port: 80            ## service的port 
+    targetPort: 80      ## 目标pod的port

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: readiness-httpget-pod
+spec:
+  containers:
+  - name: readiness-httpget-container
+    image: nginx
+    readinessProbe:
+      httpGet:
+        port: 80
+        path: /notExistedPage.html   ### 不存在的html
+      initialDelaySeconds: 1         ### container启动后1秒启动探针
+      periodSeconds: 3               ### 重试时间

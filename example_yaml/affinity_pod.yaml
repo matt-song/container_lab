@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-test1
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: affinity-test-container
+      image: mattsong/showpod:v1
+      ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   ### 硬策略 必须要符合负责不创建pod
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname    ### key-value 形式, 主机名不为xxx
+              operator: NotIn
+              values:
+                - k8s-worknode-02
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-test2
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: affinity-test-container
+      image: mattsong/showpod:v1
+      ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   ### 硬策略 必须要符合负责不创建pod
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname    ### key-value 形式, 主机名不为xxx
+              operator: NotIn
+              values:
+                - k8s-worknode-02
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-test3
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: affinity-test-container
+      image: mattsong/showpod:v1
+      ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   ### 硬策略 必须要符合负责不创建pod
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname    ### key-value 形式, 主机名不为xxx
+              operator: NotIn
+              values:
+                - k8s-worknode-02
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-test4
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: affinity-test-container
+      image: mattsong/showpod:v1
+      ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   ### 硬策略 必须要符合负责不创建pod
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname    ### key-value 形式, 主机名不为xxx
+              operator: NotIn
+              values:
+                - k8s-worknode-02
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity-test5
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: affinity-test-container
+      image: mattsong/showpod:v1
+      ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   ### 硬策略 必须要符合负责不创建pod
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname    ### key-value 形式, 主机名不为xxx
+              operator: NotIn
+              values:
+                - k8s-worknode-02

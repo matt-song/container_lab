@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-exec-pod
+spec:
+  containers:
+  - name: liveness-exec-container
+    image: busybox
+    command: ["/bin/sh","-c","touch /tmp/live; sleep 30; rm -rf /tmp/live; sleep 3600"]
+    livenessProbe:
+      exec:
+        command: ["test", "-e", "/tmp/live"]   ### 检测文件是否存在
+      initialDelaySeconds: 1         ### container启动后1秒启动探针
+      periodSeconds: 3               ### 重试时间

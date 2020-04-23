@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:  
+  name: showpod-ss
+spec:  
+  selector:    
+    matchLabels:      
+      app: showpod  
+  serviceName: "showpod-svc"  
+  replicas: 3  
+  template:    
+    metadata:      
+      labels:        
+        app: showpod    
+    spec:      
+      containers:      
+        - name: nginx        
+          image: mattsong/showpod:v1      
+          ports:        
+            - containerPort: 80          
+              name: http        
+          volumeMounts:        
+            - name: webfile          
+              mountPath: /usr/share/nginx/html/extra
+  volumeClaimTemplates:  
+    - metadata:      
+        name: webfile    
+      spec:      
+        accessModes: ["ReadWriteOnce"]      
+        storageClassName: "nfs"
+        resources:        
+          requests:
+            storage: 5Gi

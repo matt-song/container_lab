@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: prefered-affinity-test1
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: affinity-test-container
+      image: mattsong/showpod:v1
+      ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:   ### 软策略 必须要符合负责不创建pod
+        - weight: 1
+          preference: 
+            matchExpressions:    ### 如果有 source=privdeNode node, 优先考虑
+              - key: source 
+                operator: In
+                values: 
+                  - privateNode

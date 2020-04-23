@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: showpod
+spec:
+  containers:
+    - name: showpod-container
+      image: mattsong/showpod:v0.1
+      ports:
+      - containerPort: 80

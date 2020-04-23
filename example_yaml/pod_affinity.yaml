@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: podaffinity-1   ## 继续创建2,3,4,5
+  labels:
+    app: httpService
+spec:
+  containers:
+    - name: podaffinity-c
+      image: mattsong/showpod:v1     
+      ports:
+      - containerPort: 80
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:   ### 硬策略 
+      - labelSelector:
+          matchExpressions:
+          - key: app                                     ### 必须和有标签为httpService的POD在一起
+            operator: In
+            values:
+            - httpService
+        topologyKey: kubernetes.io/hostname
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:   ### 软策略 
+      - weight: 1
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:                        ### 尽量不要和标签为 Database的pod在一起
+            - key: app
+              operator: In
+              values:
+                - Database
+          topologyKey: kubernetes.io/hostname      

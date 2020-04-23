@@ -1,0 +1,98 @@
+### depolyment-1 ###
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www1-deployment
+spec:
+  selector: 
+    matchLabels:
+      name: www1-website
+  replicas: 2
+  template: 
+    metadata:
+      labels:  
+        name: www1-website
+    spec:
+      containers:
+        - name: www1-website-container
+          image: mattsong/testapp:v1 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 
+---
+### depolyment-2 ###
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: www2-deployment
+spec:
+  selector: 
+    matchLabels:
+      name: www2-website
+  replicas: 2
+  template: 
+    metadata:
+      labels:  
+        name: www2-website
+    spec:
+      containers:
+        - name: www2-website-container
+          image: mattsong/testapp:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 
+---
+### 不指定service type则默认是clusterIP
+apiVersion: v1
+kind: Service
+metadata:
+  name: www1-website-svc
+spec: 
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    name: www1-website
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: www2-website-svc
+spec: 
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    name: www2-website
+---
+### direct www1.matt.com to the svc: www1-website-svc
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: www1-website-ingress
+spec:  
+  rules:    
+    - host: www1.matt.com
+      http:        
+        paths:       
+          - path: /          
+            backend:            
+              serviceName: www1-website-svc  
+              servicePort: 80
+---
+### direct www1.matt.com to the svc: www1-website-svc
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: www2-website-ingress
+spec:  
+  rules:    
+    - host: www2.matt.com
+      http:        
+        paths:       
+          - path: /          
+            backend:            
+              serviceName: www2-website-svc  
+              servicePort: 80

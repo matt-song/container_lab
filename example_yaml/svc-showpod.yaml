@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: showpod-svc
+  namespace: web
+  labels: 
+    app: showpod
+spec:
+  ports:
+  - name: http
+    port: 80
+  clusterIP: None
+  selector:
+    app: showpod

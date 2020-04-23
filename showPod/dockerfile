@@ -1,0 +1,4 @@
+FROM nginx
+COPY ./setup.sh /tmp/setup.sh
+RUN /bin/bash -c 'bash /tmp/setup.sh'
+RUN /bin/bash -c 'rm -f /tmp/setup.sh'

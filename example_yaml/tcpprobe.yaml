@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: probe-tcp
+spec:
+  containers:
+  - name: probe-tcp-container
+    image: nginx
+    livenessProbe:
+      initialDelaySeconds: 5         ### container启动后1秒启动探针
+      timeoutSeconds: 10             ### 超时时间
+      tcpSocket:
+        port: 8080                   ### 检测8080, 这将导致container一直重启
+      periodSeconds: 3

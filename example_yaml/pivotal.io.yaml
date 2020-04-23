@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pivotal-website-deployment
+spec:
+  selector: 
+    matchLabels:
+      name: pivotal-website
+  replicas: 2
+  template: 
+    metadata:
+      labels:  
+        name: pivotal-website
+    spec:
+      containers:
+        - name: pivotal-website-container
+          image: mattsong/testapp:v1 
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pivotal-website-svc
+spec: 
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    name: pivotal-website
+---
+### ingress yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pivoal-website-ingress
+spec:  
+  rules:    
+    - host: www.pivotal.io     
+      http:        
+        paths:       
+          - path: /          
+            backend:            
+              serviceName: pivotal-website-svc  ## link to the svc we created            
+              servicePort: 80
+
+

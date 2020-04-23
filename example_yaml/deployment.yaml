@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+spec:
+  selector: 
+    matchLabels:
+      app: nginx
+  replicas: 6     
+  template:
+    metadata:
+      labels:
+        app: nginx  
+    spec:
+      containers:
+      - name: homepage-container
+        image: mattsong/showpod:v1
+        ports:
+        - containerPort: 80
